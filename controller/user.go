@@ -1,16 +1,33 @@
 package controller
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	"go-ranking/models"
+	"go-ranking/pkg/logger"
+	"strconv"
+)
 
 type UserController struct {
 }
 
 func (u UserController) GetUserInfo(c *gin.Context) {
-	id := c.Param("id")
+	idStr := c.Param("id")
 	name := c.Param("name")
-	ReturnSuccess(c, 0, name, id, 1)
+
+	id, _ := strconv.Atoi(idStr)
+	user, _ := models.GetUserTest(id)
+	ReturnSuccess(c, 0, name, user, 1)
 }
 
 func (u UserController) GetList(c *gin.Context) {
-	ReturnError(c, 404, "没有相关信息")
+	logger.Write("日志信息", "user")
+	//defer func() {
+	//	if err := recover(); err != nil {
+	//		fmt.Println("捕获异常", err)
+	//	}
+	//}()
+	num1 := 1
+	num2 := 0
+	num3 := num1 / num2
+	ReturnError(c, 404, num3)
 }
