@@ -4,7 +4,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"go-ranking/controller"
 	"go-ranking/pkg/logger"
-	"net/http"
 )
 
 func Router() *gin.Engine {
@@ -14,13 +13,11 @@ func Router() *gin.Engine {
 	user := r.Group("/user")
 	{
 		user.GET("/info/:id", controller.UserController{}.GetUserInfo)
-		user.GET("/list", controller.UserController{}.GetList)
-		user.POST("/add", func(ctx *gin.Context) {
-			ctx.String(http.StatusOK, "user add")
-		})
-		user.DELETE("/delete", func(ctx *gin.Context) {
-			ctx.String(http.StatusOK, "user delete")
-		})
+		user.GET("/list/test", controller.UserController{}.GetList)
+		user.GET("/list/:id", controller.UserController{}.GetUserList)
+		user.POST("/add/", controller.UserController{}.AddUser)
+		user.POST("/update/", controller.UserController{}.UpdateUser)
+		user.POST("/delete/", controller.UserController{}.DeleteUser)
 	}
 
 	order := r.Group("/order")
