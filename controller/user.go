@@ -1,71 +1,66 @@
 package controller
 
 import (
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"go-ranking/models"
-	"go-ranking/pkg/logger"
 	"strconv"
 )
 
 type UserController struct {
 }
 
-func (u UserController) GetUserInfo(c *gin.Context) {
-	idStr := c.Param("id")
-	name := c.Param("name")
-
-	id, _ := strconv.Atoi(idStr)
-	user, _ := models.GetUserTest(id)
-	ReturnSuccess(c, 0, name, user, 1)
+type UserApi struct {
+	Id       int    `json:"id"`
+	Username string `json:"username"`
 }
 
-func (u UserController) GetUserList(c *gin.Context) {
-	idStr := c.Param("id")
-	id, _ := strconv.Atoi(idStr)
-	users, err := models.GetUserList(id)
-	if err != nil {
-		ReturnError(c, 4004, "没有相关数据")
+func (u UserController) Login(c *gin.Context) {
+	// 获取参数信息
+	username := c.DefaultPostForm("username", "")
+	password := c.DefaultPostForm("password", "")
+	if username == "" || password == "" {
+		ReturnError(c, 4001, "请输入正确的用户名或密码")
 		return
 	}
-	ReturnSuccess(c, 2000, "获取成功", users, 1)
-}
-
-func (u UserController) AddUser(c *gin.Context) {
-	username := c.DefaultPostForm("username", "")
-	id, err := models.AddUser(username)
-	if err != nil {
-		ReturnError(c, 4002, "保存错误")
+	user, _ := models.GetUserInfoByUsername(username)
+	if user.Id == 0 || user.Password != EncryptMd5(password) {
+		ReturnError(c, 4002, "用户名或密码错误")
+		return
 	}
-	ReturnSuccess(c, 2000, "保存成功", id, 1)
-}
-
-func (u UserController) UpdateUser(c *gin.Context) {
-	idStr := c.DefaultPostForm("id", "")
-	username := c.DefaultPostForm("username", "")
-	id, _ := strconv.Atoi(idStr)
-	models.UpdateUser(id, username)
-	ReturnSuccess(c, 2000, "更新成功", id, 1)
-}
-
-func (u UserController) DeleteUser(c *gin.Context) {
-	idStr := c.DefaultPostForm("id", "")
-	id, _ := strconv.Atoi(idStr)
-	err := models.DeleteUser(id)
+	data := UserApi{Id: user.Id, Username: user.Username}
+	session := sessions.Default(c)
+	session.Set("login:"+strconv.Itoa(user.Id), user.Id)
+	err := session.Save()
 	if err != nil {
-		ReturnError(c, 4003, "删除失败")
+		ReturnError(c, 4003, "session保存失败")
+		return
 	}
-	ReturnSuccess(c, 2000, "删除成功", id, 1)
+	ReturnSuccess(c, 2000, "登陆成功", data, 1)
+
 }
 
-func (u UserController) GetList(c *gin.Context) {
-	logger.Write("日志信息", "user")
-	//defer func() {
-	//	if err := recover(); err != nil {
-	//		fmt.Println("捕获异常", err)
-	//	}
-	//}()
-	num1 := 1
-	num2 := 0
-	num3 := num1 / num2
-	ReturnError(c, 404, num3)
+func (u UserController) Register(c *gin.Context) {
+	username := c.DefaultPostForm("username", "")
+	password := c.DefaultPostForm("password", "")
+	confirmPassword := c.DefaultPostForm("confirmPassword", "")
+	if username == "" || password == "" || confirmPassword == "" {
+		ReturnError(c, 4001, "请输入正确的用户名或密码")
+		return
+	}
+	if password != confirmPassword {
+		ReturnError(c, 4002, "密码和确认密码不一致")
+		return
+	}
+	user, err := models.GetUserInfoByUsername(username)
+	if user.Id != 0 {
+		ReturnError(c, 4003, "此用户名已经存在")
+		return
+	}
+	_, err = models.AddUser(username, EncryptMd5(password))
+	if err != nil {
+		ReturnError(c, 4004, "保存失败")
+		return
+	}
+	ReturnSuccess(c, 2000, "注册成功", user, 1)
 }

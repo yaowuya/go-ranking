@@ -1,14 +1,26 @@
 package models
 
-import "go-ranking/dao"
+import (
+	"go-ranking/dao"
+	"time"
+)
 
 type User struct {
-	Id       int
-	Username string
+	Id         int    `json:"id"`
+	Username   string `json:"username"`
+	Password   string `json:"password"`
+	AddTime    int64  `json:"AddTime"`
+	UpdateTime int64  `json:"UpdateTime"`
 }
 
 func (User) TableName() string {
 	return "user"
+}
+
+func GetUserInfoByUsername(username string) (User, error) {
+	var user User
+	err := dao.Db.Where("username =?", username).First(&user).Error
+	return user, err
 }
 
 func GetUserTest(id int) (User, error) {
@@ -23,8 +35,8 @@ func GetUserList(id int) ([]User, error) {
 	return users, err
 }
 
-func AddUser(username string) (int, error) {
-	user := User{Username: username}
+func AddUser(username string, password string) (int, error) {
+	user := User{Username: username, Password: password, AddTime: time.Now().Unix(), UpdateTime: time.Now().Unix()}
 	err := dao.Db.Create(&user).Error
 	return user.Id, err
 }
