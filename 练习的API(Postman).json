@@ -1,0 +1,413 @@
+{
+	"info": {
+		"_postman_id": "97921686-e63f-49b8-9791-1fc788532dbd",
+		"name": "gin ranking",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14069421"
+	},
+	"item": [
+		{
+			"name": "gin框架crud",
+			"item": [
+				{
+					"name": "查看用户列表",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"test\",\r\n    \"cid\":123\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/list/3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"list",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查询用户信息",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/info/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"info",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "新增用户",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "zhangfei",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/user/add/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"add",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "修改用户",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "zhangfeifei",
+									"type": "text"
+								},
+								{
+									"key": "id",
+									"value": "16",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/user/update/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"update",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "删除用户",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id",
+									"value": "16",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/user/delete/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"delete",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "订单",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"test\",\r\n    \"cid\":123\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/order/list",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"order",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "路由测试",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/user/info/1111/zhangsan",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"info",
+								"1111",
+								"zhangsan"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "注册",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "lilei",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						},
+						{
+							"key": "confirmPassword",
+							"value": "123456",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/user/register",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "登录",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "lilei",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/user/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "查询活动的参赛选手",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "aid",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/player/list",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"player",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "活动选手排行榜",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "aid",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/ranking",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"ranking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "投票",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "userId",
+							"value": "3",
+							"type": "text"
+						},
+						{
+							"key": "playerId",
+							"value": "3",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/vote/add",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"vote",
+						"add"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "127.0.0.1:9999",
+			"type": "string"
+		}
+	]
+}

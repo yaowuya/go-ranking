@@ -49,3 +49,9 @@ func DeleteUser(id int) error {
 	err := dao.Db.Delete(&User{}, id).Error
 	return err
 }
+
+func GetUserInfo(id int) (User, error) {
+	var user User
+	err := dao.Db.Where("id = ?", id).First(&user).Error
+	return user, err
+}

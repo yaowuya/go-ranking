@@ -20,6 +20,16 @@ func Router() *gin.Engine {
 		user.POST("/login/", controller.UserController{}.Login)
 		user.POST("/register/", controller.UserController{}.Register)
 	}
+	player := r.Group("/player")
+	{
+		player.POST("/list", controller.PlayerController{}.GetPlayers)
+	}
+	r.POST("/ranking", controller.PlayerController{}.GetRanking)
+
+	vote := r.Group("/vote")
+	{
+		vote.POST("/add", controller.VoteController{}.AddVote)
+	}
 
 	order := r.Group("/order")
 	{
